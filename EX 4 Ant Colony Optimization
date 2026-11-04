@@ -4,6 +4,17 @@ import matplotlib.pyplot as plt
 from itertools import combinations
 
 
+def generate_random_weighted_graph(n, low, high, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
+    g = nx.generators.complete_graph(n)
+    # add random weights to the graph
+    g.add_weighted_edges_from([(a,b,np.random.randint(low,high)) for a,b in g.edges()])
+    # create layout for plotting and set pos as attribute
+    nx.set_node_attributes(g,nx.spring_layout(g, seed=seed),"pos")
+    return g
+
+
 def plot_graph(g,title="",highlight_edges=[]):
     pos = nx.get_node_attributes(g,"pos")
     plt.figure(figsize=(17,17))
@@ -111,9 +122,9 @@ class ACOTSP:
             return None
 
 np.random.seed(3)
-g = generate_random_weighted_graph(10,50,1,20,seed=10)
+g = generate_random_weighted_graph(10,1,20,seed=10)
 plot_graph(g,"Graph for TSP")
 
 acotsp = ACOTSP(g,n_ants=10,alpha=3,beta=5,Q=10,rho=.1)
 acotsp.run(n_iter = 50)
-plot_graph(g,"Shortest Path Found By ACO for TSP",acotsp.min_path)
+plot_graph(g,"Shortest Path Found By ACO for TSP",acotsp.min_path or [])
