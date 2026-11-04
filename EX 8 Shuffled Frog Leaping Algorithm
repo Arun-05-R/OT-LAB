@@ -75,5 +75,5 @@ def sfla(opt_func, frogs=30, dimension=2, sigma=1, mu=0, mplx_no=5, mplx_iters=1
 
 print("Starting shuffled frog leaping algorithm \n")
 solun, frogs, memeplexes = sfla(opt_func, 100, 2, 1, 0, 5, 25, 50)
-print("\Shuffled frog leaping algorithm completed")
+print("\nShuffled frog leaping algorithm completed")
 print(f'\nBest solution: {solun} Score: {opt_func(solun)}')
